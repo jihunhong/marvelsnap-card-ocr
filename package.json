@@ -1,15 +1,11 @@
 {
-  "name": "marvelsnap-tesseract",
+  "name": "marvelsnap-ocr",
   "version": "1.0.0",
   "main": "index.js",
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "jihunhong",
   "license": "ISC",
-  "description": "",
-  "dependencies": {
-    "tesseract.js": "^4.0.3"
-  }
+  "description": ""
 }
