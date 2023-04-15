@@ -1,16 +1,27 @@
 import { DISTANCE_THRESHOLD } from "../config";
-
 interface Score {
   value: string;
   score: number;
 }
 
-export const calculateScores = (target: string, arr: Card[]): Score[] => {
+/**
+ * Calculates a score by comparing the provided string with the name of the datasheet object
+ * @param {string} target specified string(detected card name).
+ * @param {Array} arr comparable datasheet
+ * @param {number} minScore min distance score (optional) (default value is 0.25)
+ *
+ * @returns {Array<Score>} sorted correctable Array
+ */
+export const calculateScores = (
+  target: string,
+  arr: Card[],
+  minScore = DISTANCE_THRESHOLD
+): Score[] => {
   const scores: Score[] = [];
 
   for (let i = 0; i < arr.length; i++) {
     const score = calculateScore(target?.toLowerCase(), arr[i].name);
-    if (score > DISTANCE_THRESHOLD) {
+    if (score > minScore) {
       scores.push({
         value: arr[i].cardDefId,
         score: score,

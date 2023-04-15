@@ -1,14 +1,23 @@
 import axios from "axios";
-import { API_END_POINT, API_KEY } from "../config";
+import { API_KEY } from "../config";
 
+/**
+ * Detects text from images provided by URL using Google Cloud Vision API
+ * @param {string} url image Url
+ * @param {string} key This refers to the Google Cloud Vision API Key, which can also be set as process.env.CLOUD_VISION_API_KEY
+ *
+ * @returns {Array<AnnotationItem>} detected responses
+ */
 export async function singleDetect({
   url,
+  key,
 }: {
   url: string;
+  key?: string;
 }): Promise<[null | Array<AnnotationItem>]> {
   try {
     const response = await axios.post(
-      API_END_POINT,
+      "https://vision.googleapis.com/v1/images:annotate",
       {
         requests: [
           {
@@ -27,7 +36,7 @@ export async function singleDetect({
       },
       {
         params: {
-          key: API_KEY,
+          key: key || API_KEY,
         },
       }
     );
@@ -38,7 +47,7 @@ export async function singleDetect({
     console.warn(`[warn] detected empty data string on url : ${url}`);
     return [null];
   } catch (err: any) {
-    console.error(`[detect-error] ${err.response.data.error.message}`);
+    console.error(`[error] ${err.response.data.error.message}`);
     return [null];
   }
 }
